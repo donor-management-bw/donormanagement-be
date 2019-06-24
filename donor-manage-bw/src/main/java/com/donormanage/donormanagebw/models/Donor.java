@@ -22,7 +22,7 @@ public class Donor {
     @Column(nullable = false)
     private String demail;
 
-    private Integer dphone;
+    private String dphone;
     private String daddress;
 
     @OneToMany(mappedBy = "donor",
@@ -33,7 +33,7 @@ public class Donor {
     public Donor() {
     }
 
-    public Donor(String dname, String demail, Integer dphone, String daddress, List<Donation> donationList) {
+    public Donor(String dname, String demail, String dphone, String daddress, List<Donation> donationList) {
         this.dname = dname;
         this.demail = demail;
         this.dphone = dphone;
@@ -65,11 +65,11 @@ public class Donor {
         this.demail = demail;
     }
 
-    public Integer getDphone() {
+    public String getDphone() {
         return dphone;
     }
 
-    public void setDphone(Integer dphone) {
+    public void setDphone(String dphone) {
         this.dphone = dphone;
     }
 

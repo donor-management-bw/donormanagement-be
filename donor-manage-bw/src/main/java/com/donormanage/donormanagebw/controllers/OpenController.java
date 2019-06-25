@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class OpenController
@@ -45,15 +46,9 @@ public class OpenController
 
         newuser =  userService.save(newuser);
 
-        // set the location header for the newly created resource - to another controller!
-        HttpHeaders responseHeaders = new HttpHeaders();
-        URI newRestaurantURI = ServletUriComponentsBuilder
-                .fromUriString(request.getServerName() + ":" + request.getLocalPort() + "/users/user/{userId}")
-                .buildAndExpand(newuser.getUserid()).toUri();
-        responseHeaders.setLocation(newRestaurantURI);
+        User createdUser = userService.findUserById(newuser.getUserid());
 
-
-        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
 }

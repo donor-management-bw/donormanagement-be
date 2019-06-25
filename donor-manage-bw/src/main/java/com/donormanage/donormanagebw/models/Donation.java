@@ -16,7 +16,7 @@ public class Donation {
     private long donationid;
 
     private String note;
-    private long amount;
+    private Integer amount;
 
     @Temporal(TIMESTAMP)
     protected Date donationDate;
@@ -29,7 +29,7 @@ public class Donation {
     public Donation() {
     }
 
-    public Donation(String note, long amount, Date donationDate, Donor donor) {
+    public Donation(String note, Integer amount, Date donationDate, Donor donor) {
         this.note = note;
         this.amount = amount;
         this.donationDate = donationDate;
@@ -52,11 +52,11 @@ public class Donation {
         this.note = note;
     }
 
-    public long getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 

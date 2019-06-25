@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service(value = "donationService")
@@ -65,7 +66,10 @@ public class DonationServiceImpl implements DonationService{
     @Transactional
     @Override
     public Donation save(Donation donation) {
+
+        donation.setDonationdate(new Date());
         return donationrepos.save(donation);
+
     }
 
     @Transactional

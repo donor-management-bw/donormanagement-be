@@ -18,21 +18,20 @@ public class Donation {
     private String note;
     private Integer amount;
 
-    @Temporal(TIMESTAMP)
-    protected Date donationDate;
+    private Date donationdate;
 
     @ManyToOne
     @JoinColumn(name = "donorid")
-    @JsonIgnoreProperties("donorid")
+    @JsonIgnoreProperties("donationlist")
     private Donor donor;
 
     public Donation() {
     }
 
-    public Donation(String note, Integer amount, Date donationDate, Donor donor) {
+    public Donation(String note, Integer amount, Date donationdate, Donor donor) {
         this.note = note;
         this.amount = amount;
-        this.donationDate = donationDate;
+        this.donationdate = donationdate;
         this.donor = donor;
     }
 
@@ -60,12 +59,12 @@ public class Donation {
         this.amount = amount;
     }
 
-    public Date getDonationDate() {
-        return donationDate;
+    public Date getDonationdate() {
+        return donationdate;
     }
 
-    public void setDonationDate(Date donationDate) {
-        this.donationDate = donationDate;
+    public void setDonationdate(Date donationdate) {
+        this.donationdate = donationdate;
     }
 
     public Donor getDonor() {

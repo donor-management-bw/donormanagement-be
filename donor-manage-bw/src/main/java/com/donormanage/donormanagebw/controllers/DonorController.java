@@ -27,7 +27,7 @@ import java.util.List;
 @RestController
 public class DonorController {
 
-    private static final Logger logger = LoggerFactory.getLogger(RolesController.class);
+    private static final Logger logger = LoggerFactory.getLogger(DonorController.class);
 
     @Autowired
     private DonorService donorService;
@@ -72,7 +72,6 @@ public class DonorController {
 //        responseHeaders.setLocation(newUserURI);
 
         return new ResponseEntity<>(createdDonor, HttpStatus.CREATED);
-
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
@@ -106,11 +105,11 @@ public class DonorController {
     @ApiImplicitParam(name = "donorid", dataType = "integer", paramType = "query",
             value = "id of donor you wish to remove from the database")
     @DeleteMapping("/api/donor/delete/{donorid}")
-    public ResponseEntity<?> deleteDonorById(HttpServletRequest request, @PathVariable long id)
+    public ResponseEntity<?> deleteDonorById(HttpServletRequest request, @PathVariable long donorid)
     {
         logger.trace(request.getRequestURI() + " accessed");
 
-        donorService.delete(id);
+        donorService.delete(donorid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

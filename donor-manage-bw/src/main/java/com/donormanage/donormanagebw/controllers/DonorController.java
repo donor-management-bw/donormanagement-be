@@ -1,6 +1,7 @@
 package com.donormanage.donormanagebw.controllers;
 
 import com.donormanage.donormanagebw.models.Donor;
+import com.donormanage.donormanagebw.models.User;
 import com.donormanage.donormanagebw.services.DonorService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -14,10 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +27,7 @@ import java.util.List;
 @RestController
 public class DonorController {
 
-    private static final Logger logger = LoggerFactory.getLogger(RolesController.class);
+    private static final Logger logger = LoggerFactory.getLogger(DonorController.class);
 
     @Autowired
     private DonorService donorService;
@@ -55,11 +53,14 @@ public class DonorController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
+    @ApiOperation(value = "adds a single donor", response = Donor.class, responseContainer = "Object")
     @PostMapping(value = "/api/donors/add", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> addNewDonor(HttpServletRequest request, @Valid @RequestBody Donor newdonor) throws URISyntaxException {
         logger.trace(request.getRequestURI() + " accessed");
 
         newdonor = donorService.save(newdonor);
+
+        Donor createdDonor = donorService.findDonorById(newdonor.getDonorid());
 
         // set the location header for the newly created resource
 //        HttpHeaders responseHeaders = new HttpHeaders();
@@ -70,7 +71,45 @@ public class DonorController {
 //                .toUri();
 //        responseHeaders.setLocation(newUserURI);
 
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+        return new ResponseEntity<>(createdDonor, HttpStatus.CREATED);
+    }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @ApiOperation(value = "update a donor")
+    @ApiImplicitParam(name = "donorid", dataType = "integer", paramType = "query",
+            value = "id of donor you wish to update. Include a json object with any donor field values")
+    @PutMapping(value = "/api/donors/update/{donorid}")
+    public ResponseEntity<?> updateDonor(HttpServletRequest request, @RequestBody Donor updateDonor, @PathVariable long donorid)
+    {
+        logger.trace(request.getRequestURI() + " accessed");
+
+        donorService.update(updateDonor, donorid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @ApiOperation(value = "get a specific donor", response = Donor.class, responseContainer = "Object")
+    @ApiImplicitParam(name = "donorid", dataType = "integer", paramType = "query",
+            value = "id of donor you wish to recieve a json object of")
+    @GetMapping(value = "/api/donor/{donorid}", produces = {"application/json"})
+    public ResponseEntity<?> getDonor(HttpServletRequest request, @PathVariable Long donorid)
+    {
+        logger.trace(request.getRequestURI() + " accessed");
+
+        Donor donor = donorService.findDonorById(donorid);
+        return new ResponseEntity<>(donor, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @ApiOperation(value = "delete a specific donor")
+    @ApiImplicitParam(name = "donorid", dataType = "integer", paramType = "query",
+            value = "id of donor you wish to remove from the database")
+    @DeleteMapping("/api/donor/delete/{donorid}")
+    public ResponseEntity<?> deleteDonorById(HttpServletRequest request, @PathVariable long donorid)
+    {
+        logger.trace(request.getRequestURI() + " accessed");
+
+        donorService.delete(donorid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

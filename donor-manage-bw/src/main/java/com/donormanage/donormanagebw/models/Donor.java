@@ -28,17 +28,19 @@ public class Donor {
     @OneToMany(mappedBy = "donor",
                 cascade = CascadeType.ALL)
     @JsonIgnoreProperties("donor")
-    private List<Donation> donationList = new ArrayList<>();
+    private List<Donation> donationlist = new ArrayList<>();
+
+
 
     public Donor() {
     }
 
-    public Donor(String dname, String demail, String dphone, String daddress, List<Donation> donationList) {
+    public Donor(String dname, String demail, String dphone, String daddress, List<Donation> donationlist) {
         this.dname = dname;
         this.demail = demail;
         this.dphone = dphone;
         this.daddress = daddress;
-        this.donationList = donationList;
+        this.donationlist = donationlist;
     }
 
     public long getDonorid() {
@@ -81,11 +83,11 @@ public class Donor {
         this.daddress = daddress;
     }
 
-    public List<Donation> getDonationList() {
-        return donationList;
+    public List<Donation> getDonationlist() {
+        return donationlist;
     }
 
-    public void setDonationList(List<Donation> donationList) {
-        this.donationList = donationList;
+    public void setDonationlist(List<Donation> donationList) {
+        this.donationlist = donationList;
     }
 }

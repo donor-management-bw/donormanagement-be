@@ -30,6 +30,8 @@ public class Donor {
     @JsonIgnoreProperties("donor")
     private List<Donation> donationlist = new ArrayList<>();
 
+
+
     public Donor() {
     }
 

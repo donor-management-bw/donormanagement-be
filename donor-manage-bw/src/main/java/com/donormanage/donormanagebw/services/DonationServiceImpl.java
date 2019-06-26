@@ -3,6 +3,7 @@ package com.donormanage.donormanagebw.services;
 import com.donormanage.donormanagebw.models.Donation;
 import com.donormanage.donormanagebw.repository.DonationRepository;
 import com.donormanage.donormanagebw.repository.DonorRepository;
+import com.donormanage.donormanagebw.views.TotalDonationAmount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,4 +80,9 @@ public class DonationServiceImpl implements DonationService{
         return donationrepos.findDonationsByDonorId(id);
     }
 
+    @Transactional
+    @Override
+    public TotalDonationAmount totalDonationAmount(){
+        return donationrepos.totalDonationsAmount();
+    }
 }

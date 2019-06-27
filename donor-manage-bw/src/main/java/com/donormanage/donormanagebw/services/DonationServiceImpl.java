@@ -4,6 +4,7 @@ import com.donormanage.donormanagebw.models.Donation;
 import com.donormanage.donormanagebw.repository.DonationRepository;
 import com.donormanage.donormanagebw.repository.DonorRepository;
 import com.donormanage.donormanagebw.views.TotalDonationAmount;
+import com.donormanage.donormanagebw.views.TotalDonationCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,5 +85,11 @@ public class DonationServiceImpl implements DonationService{
     @Override
     public TotalDonationAmount totalDonationAmount(){
         return donationrepos.totalDonationsAmount();
+    }
+
+    @Transactional
+    @Override
+    public TotalDonationCount totalDonationCount(){
+        return donationrepos.totalDonationCount();
     }
 }

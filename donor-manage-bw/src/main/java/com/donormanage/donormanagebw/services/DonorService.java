@@ -1,6 +1,7 @@
 package com.donormanage.donormanagebw.services;
 
 import com.donormanage.donormanagebw.models.Donor;
+import com.donormanage.donormanagebw.views.TotalDonorCount;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -16,5 +17,7 @@ public interface DonorService {
     void delete(long id);
 
     Donor save(Donor donor);
+
+    TotalDonorCount totalDonorCount();
 
 }

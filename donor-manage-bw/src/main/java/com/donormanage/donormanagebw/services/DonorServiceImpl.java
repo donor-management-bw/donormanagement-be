@@ -3,6 +3,8 @@ package com.donormanage.donormanagebw.services;
 import com.donormanage.donormanagebw.models.Donation;
 import com.donormanage.donormanagebw.models.Donor;
 import com.donormanage.donormanagebw.repository.DonorRepository;
+import com.donormanage.donormanagebw.views.TotalDonationCount;
+import com.donormanage.donormanagebw.views.TotalDonorCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -93,4 +95,9 @@ public class DonorServiceImpl implements DonorService {
         return donorrepos.save(newDonor);
     }
 
+    @Transactional
+    @Override
+    public TotalDonorCount totalDonorCount(){
+        return donorrepos.totalDonorCount();
+    }
 }

@@ -4,6 +4,7 @@ import com.donormanage.donormanagebw.models.Donation;
 import com.donormanage.donormanagebw.models.Donor;
 import com.donormanage.donormanagebw.services.DonationService;
 import com.donormanage.donormanagebw.views.TotalDonationAmount;
+import com.donormanage.donormanagebw.views.TotalDonationCount;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -103,5 +104,13 @@ public class DonationController {
     {
         TotalDonationAmount totalDonationAmount = donationService.totalDonationAmount();
         return new ResponseEntity<>(totalDonationAmount, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "returns the total of count of all donations", response = Donation.class, responseContainer = "Object")
+    @GetMapping(value = "/api/donations/count", produces = {"application/json"})
+    public ResponseEntity<?> getTotalDonationCount(HttpServletRequest request)
+    {
+        TotalDonationCount totalDonationCount = donationService.totalDonationCount();
+        return new ResponseEntity<>(totalDonationCount, HttpStatus.OK);
     }
 }

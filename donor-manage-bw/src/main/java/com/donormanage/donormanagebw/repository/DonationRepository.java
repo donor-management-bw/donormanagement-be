@@ -2,6 +2,7 @@ package com.donormanage.donormanagebw.repository;
 
 import com.donormanage.donormanagebw.models.Donation;
 import com.donormanage.donormanagebw.views.TotalDonationAmount;
+import com.donormanage.donormanagebw.views.TotalDonationCount;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -20,7 +21,9 @@ public interface DonationRepository extends CrudRepository<Donation, Long> {
     @Query(value = "SELECT sum(amount) total from donations", nativeQuery = true)
     TotalDonationAmount totalDonationsAmount();
 
-
+    @Transactional
+    @Query(value = "SELECT count(*) as total from donations", nativeQuery = true)
+    TotalDonationCount totalDonationCount();
         //find total donations made
     //find total amount of donated amount
 }

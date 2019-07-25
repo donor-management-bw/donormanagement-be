@@ -1,8 +1,11 @@
 package com.donormanage.donormanagebw.controllers;
 
+import com.donormanage.donormanagebw.models.Donation;
 import com.donormanage.donormanagebw.models.Donor;
 import com.donormanage.donormanagebw.models.User;
 import com.donormanage.donormanagebw.services.DonorService;
+import com.donormanage.donormanagebw.views.TotalDonationCount;
+import com.donormanage.donormanagebw.views.TotalDonorCount;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -111,5 +114,13 @@ public class DonorController {
 
         donorService.delete(donorid);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "returns the total of count of all donors", response = Donation.class, responseContainer = "Object")
+    @GetMapping(value = "/api/donor/count", produces = {"application/json"})
+    public ResponseEntity<?> getTotalDonationCount(HttpServletRequest request)
+    {
+        TotalDonorCount totalDonorCount = donorService.totalDonorCount();
+        return new ResponseEntity<>(totalDonorCount, HttpStatus.OK);
     }
 }
